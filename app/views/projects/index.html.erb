@@ -1,0 +1,13 @@
+<h1>Список проектов</h1>
+
+<ul>
+  <% @projects.each do |project| %>
+    <li>
+      <%= link_to project.title, project_path(project) %>
+      | <%= link_to 'Редактировать', edit_project_path(project) %>
+      | <%= link_to 'Удалить', project_path(project), method: :delete, data: { confirm: 'Вы уверены?' } %>
+    </li>
+  <% end %>
+</ul>
+
+<%= link_to 'Добавить проект', new_project_path %>

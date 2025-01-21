@@ -1,0 +1,7 @@
+<h1><%= @task.title %></h1>
+<p><%= @task.description %></p>
+<p>Статус: <%= @task.status %></p>
+<p>Исполнитель: <%= @task.assignee.name if @task.assignee %></p>
+
+<%= link_to 'Редактировать', edit_task_path(@task) %> |
+<%= link_to 'Назад', tasks_path %>

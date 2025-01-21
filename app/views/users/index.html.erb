@@ -1,0 +1,13 @@
+<h1>Список пользователей</h1>
+
+<ul>
+  <% @users.each do |user| %>
+    <li>
+      <%= link_to user.name, user_path(user) %>
+      | <%= link_to 'Редактировать', edit_user_path(user) %>
+      | <%= link_to 'Удалить', user_path(user), method: :delete, data: { confirm: 'Вы уверены?' } %>
+    </li>
+  <% end %>
+</ul>
+
+<%= link_to 'Добавить пользователя', new_user_path %>

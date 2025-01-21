@@ -1,0 +1,19 @@
+<h1>Создать пользователя</h1>
+
+<%= form_with(model: @user, local: true) do |form| %>
+  <div>
+    <%= form.label :name, 'Имя' %>
+    <%= form.text_field :name %>
+  </div>
+
+  <div>
+    <%= form.label :email, 'Электронная почта' %>
+    <%= form.text_field :email %>
+  </div>
+
+  <div>
+    <%= form.submit 'Создать' %>
+  </div>
+<% end %>
+
+<%= link_to 'Назад', users_path %>
