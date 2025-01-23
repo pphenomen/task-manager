@@ -1,19 +1,30 @@
-<h1>Создать проект</h1>
+<div class="projects-section py-5">
+  <div class="container">
+    <div class="card shadow-sm border-0">
+      <div class="card-header bg-dark text-white">
+        <h2 class="mb-0">Создать проект</h2>
+      </div>
 
-<%= form_with(model: @project, local: true) do |form| %>
-  <div>
-    <%= form.label :title, 'Название' %>
-    <%= form.text_field :title %>
+      <div class="card-body p-4">
+        <%= render "form", object: @project %>
+      </div>
+    </div>
   </div>
+</div>
 
-  <div>
-    <%= form.label :description, 'Описание' %>
-    <%= form.text_area :description %>
-  </div>
+<!-- Стили -->
+<style>
+  .projects-section {
+    background: linear-gradient(135deg, #e6f0ff, #f8f9fa);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 
-  <div>
-    <%= form.submit 'Создать' %>
-  </div>
-<% end %>
-
-<%= link_to 'Назад', projects_path %>
+  .card {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+  }
+</style>

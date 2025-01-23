@@ -1,7 +1,25 @@
-<h1><%= @task.title %></h1>
-<p><%= @task.description %></p>
-<p>Статус: <%= @task.status %></p>
-<p>Исполнитель: <%= @task.assignee.name if @task.assignee %></p>
-
-<%= link_to 'Редактировать', edit_task_path(@task) %> |
-<%= link_to 'Назад', tasks_path %>
+<div class="container mt-5">
+  <div class="card shadow-sm">
+    <div class="card-header bg-primary text-white">
+      <h2 class="mb-0"><%= @project.try(:title) || @task.try(:title) || @user.try(:name) %></h2>
+    </div>
+    <div class="card-body">
+      <ul class="list-group">
+        <% instance_variables.each do |var| %>
+          <% next if var.to_s.start_with?("@_") || var == :@_params %>
+          <% value = instance_variable_get(var) %>
+          <% if value.is_a?(ActiveRecord::Base) %>
+            <% value.attributes.except("id", "created_at", "updated_at").each do |attr, val| %>
+              <li class="list-group-item"><strong><%= attr.humanize %>:</strong> <%= val %></li>
+            <% end %>
+          <% end %>
+        <% end %>
+      </ul>
+    </div>
+    <div class="card-footer">
+      <%= link_to "Назад", polymorphic_path(@project || @task || @user), class: "btn btn-secondary" %>
+      <%= link_to "Редактировать", polymorphic_path([:edit, @project || @task || @user]), class: "btn btn-warning" %>
+      <%= link_to "Удалить", @project || @task || @user, method: :delete, data: { confirm: "Удалить?" }, class: "btn btn-danger" %>
+    </div>
+  </div>
+</div>

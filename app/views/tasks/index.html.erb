@@ -1,13 +1,82 @@
-<h1>Список задач</h1>
+<div class="tasks-section py-5">
+  <div class="container">
+    <div class="card shadow-sm border-0 p-4">
+      <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="display-5 fw-bold">Задачи</h1>
+        <%= link_to "Добавить задачу", new_task_path, class: "btn btn-primary btn-lg" %>
+      </div>
 
-<ul>
-  <% @tasks.each do |task| %>
-    <li>
-      <%= link_to task.title, task_path(task) %>
-      | <%= link_to 'Редактировать', edit_task_path(task) %>
-      | <%= link_to 'Удалить', task_path(task), method: :delete, data: { confirm: 'Вы уверены?' } %>
-    </li>
-  <% end %>
-</ul>
+      <table class="table table-hover align-middle">
+        <thead class="table-dark">
+          <tr>
+            <% model_class = Task %>
+            <% model_attributes = model_class.column_names - ["id", "created_at", "updated_at"] %>
 
-<%= link_to 'Добавить задачу', new_task_path %>
+            <% model_attributes.each do |attr| %>
+              <th><%= model_class.column_names_rus[attr] %></th>
+            <% end %>
+            <th class="text-center">Действия</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @tasks.each do |task| %>
+            <tr>
+              <% model_attributes.each do |attr| %>
+                <td>
+                  <% if attr == "due_date" %>
+                    <%= task.formatted_due_date %>
+                  <% elsif attr == "project_id" %>
+                    <%= task.project_name %>
+                  <% elsif attr == "assignee_id" %>
+                    <%= task.assignee_name %>
+                  <% else %>
+                    <%= task.send(attr) %>
+                  <% end %>
+                </td>
+              <% end %>
+              <td class="text-center">
+                <%= link_to "✏️", edit_task_path(task), class: "btn btn-outline-light btn-sm me-2" %>
+                <%= link_to "🗑", task, method: :delete, data: { confirm: "Удалить задачу?" }, class: "btn btn-outline-light btn-sm" %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Кнопка возврата к разделам -->
+    <div class="text-center mt-4">
+      <%= link_to "🏠 Вернуться назад", root_path(anchor: "sections"), class: "btn btn-secondary btn-lg" %>
+    </div>
+  </div>
+</div>
+
+<!-- Стили -->
+<style>
+  /* Фон, как на других страницах */
+  .tasks-section {
+    background: linear-gradient(135deg, #e6f0ff, #f8f9fa);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  /* Карточка */
+  .card {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+  }
+
+  /* Кнопка возврата */
+  .btn-secondary {
+    background-color: #6c757d;
+    border-color: #6c757d;
+  }
+
+  .btn-secondary:hover {
+    background-color: #5a6268;
+    border-color: #545b62;
+  }
+</style>

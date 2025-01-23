@@ -1,0 +1,23 @@
+<%= form_with model: object, local: true, class: "needs-validation" do |form| %>
+  <% object.attributes.except("id", "created_at", "updated_at").each do |attr, value| %>
+    <div class="mb-2">
+      <%= form.label attr, Task.column_names_rus[attr], class: "form-label" %>
+      <% if attr == "status" %>
+        <%= form.select attr, options_for_select([['Новая', 'новая'], ['В процессе', 'в_процессе'], ['Завершена', 'завершена']], selected: object.current_status), {}, { class: "form-control form-select", required: true } %>
+      <% elsif attr == "project_id" %>
+        <%= form.collection_select attr, Project.all, :id, :title, { prompt: "Выберите проект" }, { class: "form-control form-select", required: true } %>
+      <% elsif attr == "assignee_id" %>
+        <%= form.collection_select attr, User.all, :id, :name, { prompt: "Выберите исполнителя" }, { class: "form-control form-select", required: true } %>
+      <% elsif attr == "due_date" %>
+        <%= form.date_field attr, value: value, class: "form-control", required: true %>
+      <% else %>
+        <%= form.text_field attr, value: value, class: "form-control", required: true %>
+      <% end %>
+    </div>
+  <% end %>
+
+  <div class="mt-2">
+    <%= form.submit "Сохранить", class: "btn btn-primary btn-lg me-3" %>
+    <%= link_to "Назад", url_for(object), class: "btn btn-secondary btn-lg" %>
+  </div>
+<% end %>
