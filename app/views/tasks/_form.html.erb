@@ -1,23 +1,85 @@
-<%= form_with model: object, local: true, class: "needs-validation" do |form| %>
-  <% object.attributes.except("id", "created_at", "updated_at").each do |attr, value| %>
-    <div class="mb-2">
-      <%= form.label attr, Task.column_names_rus[attr], class: "form-label" %>
-      <% if attr == "status" %>
-        <%= form.select attr, options_for_select([['Новая', 'новая'], ['В процессе', 'в_процессе'], ['Завершена', 'завершена']], selected: object.status), {}, { class: "form-control form-select", required: true } %>
-      <% elsif attr == "project_id" %>
-        <%= form.collection_select attr, Project.all, :id, :title, { prompt: "Выберите проект" }, { class: "form-control form-select", required: true } %>
-      <% elsif attr == "assignee_id" %>
-        <%= form.collection_select attr, User.all, :id, :name, { prompt: "Выберите исполнителя" }, { class: "form-control form-select", required: true } %>
-      <% elsif attr == "due_date" %>
-        <%= form.date_field attr, value: value, class: "form-control", required: true %>
-      <% else %>
-        <%= form.text_field attr, value: value, class: "form-control", required: true %>
-      <% end %>
+<%= form_with model: task, local: true, class: "needs-validation" do |form| %>
+  <!-- Вывод ошибок над формой -->
+  <% if task.errors.any? %>
+    <div class="alert alert-danger">
+      <h4><%= task.new_record? ? 'Невозможно создать задачу:' : 'Невозможно обновить задачу:' %></h4>
+      <ul>
+        <% task.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
     </div>
   <% end %>
 
-  <div class="mt-2">
-    <%= form.submit "Сохранить", class: "btn btn-primary btn-lg me-3" %>
+  <!-- Поле для названия -->
+  <div class="mb-4">
+    <%= form.label :title, "Название", class: "form-label fw-bold" %>
+    <%= form.text_field :title, class: "form-control #{'is-invalid' if task.errors[:title].any?}" %>
+    <% if task.errors[:title].any? %>
+      <div class="invalid-feedback">
+        <%= task.errors[:title].join(", ") %>
+      </div>
+    <% end %>
+  </div>
+
+  <!-- Поле для описания -->
+  <div class="mb-4">
+    <%= form.label :description, "Описание", class: "form-label fw-bold" %>
+    <%= form.text_area :description, rows: 4, class: "form-control #{'is-invalid' if task.errors[:description].any?}" %>
+    <% if task.errors[:description].any? %>
+      <div class="invalid-feedback">
+        <%= task.errors[:description].join(", ") %>
+      </div>
+    <% end %>
+  </div>
+
+  <!-- Поле для срока выполнения -->
+  <div class="mb-4">
+    <%= form.label :due_date, "Срок выполнения", class: "form-label fw-bold" %>
+    <%= form.date_field :due_date, class: "form-control #{'is-invalid' if task.errors[:due_date].any?}" %>
+    <% if task.errors[:due_date].any? %>
+      <div class="invalid-feedback">
+        <%= task.errors[:due_date].join(", ") %>
+      </div>
+    <% end %>
+  </div>
+
+  <!-- Поле для статуса -->
+  <div class="mb-4">
+    <%= form.label :status, "Статус", class: "form-label fw-bold" %>
+    <%= form.select :status, options_for_select([['Новая', 'новая'], ['В процессе', 'в_процессе'], ['Завершена', 'завершена']], selected: task.status), {}, { class: "form-control form-select #{'is-invalid' if task.errors[:status].any?}" } %>
+    <% if task.errors[:status].any? %>
+      <div class="invalid-feedback">
+        <%= task.errors[:status].join(", ") %>
+      </div>
+    <% end %>
+  </div>
+
+  <!-- Поле для выбора проекта -->
+  <div class="mb-4">
+    <%= form.label :project_id, "Проект", class: "form-label fw-bold" %>
+    <%= form.collection_select :project_id, Project.all, :id, :title, { prompt: "Выберите проект" }, { class: "form-control form-select #{'is-invalid' if task.errors[:project_id].any?}" } %>
+    <% if task.errors[:project_id].any? %>
+      <div class="invalid-feedback">
+        <%= task.errors[:project_id].join(", ") %>
+      </div>
+    <% end %>
+  </div>
+
+  <!-- Поле для выбора исполнителя -->
+  <div class="mb-4">
+    <%= form.label :assignee_id, "Исполнитель", class: "form-label fw-bold" %>
+    <%= form.collection_select :assignee_id, User.all, :id, :name, { prompt: "Выберите исполнителя" }, { class: "form-control form-select #{'is-invalid' if task.errors[:assignee_id].any?}" } %>
+    <% if task.errors[:assignee_id].any? %>
+      <div class="invalid-feedback">
+        <%= task.errors[:assignee_id].join(", ") %>
+      </div>
+    <% end %>
+  </div>
+
+  <!-- Кнопки -->
+  <div class="mt-4">
+    <%= form.submit task.new_record? ? "Добавить задачу" : "Обновить задачу", class: "btn btn-primary btn-lg me-3" %>
     <%= link_to "Назад", tasks_path, class: "btn btn-secondary btn-lg" %>
   </div>
 <% end %>

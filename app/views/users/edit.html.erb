@@ -3,13 +3,11 @@
     <div class="card shadow-sm border-0">
       <!-- Заголовок формы -->
       <div class="card-header bg-dark text-white">
-        <h2 class="mb-0">
-          <%= @user.new_record? ? "Создать пользователя" : "Редактировать пользователя" %>
-        </h2>
+        <h2 class="mb-0">Редактировать пользователя</h2>
       </div>
 
       <div class="card-body p-4">
-        <%= render "form", object: @user %>
+        <%= render "form", user: @user %>
       </div>
     </div>
   </div>

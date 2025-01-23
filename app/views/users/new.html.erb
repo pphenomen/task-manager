@@ -4,12 +4,12 @@
       <!-- Заголовок формы -->
       <div class="card-header bg-dark text-white">
         <h2 class="mb-0">
-          <%= @user.new_record? ? "Добавить пользователя" : "Редактировать пользователя" %>
+          <h2 class="mb-0">Добавить пользователя</h2>
         </h2>
       </div>
 
       <div class="card-body p-4">
-        <%= render "form", object: @user %>
+        <%= render "form", user: @user %>
       </div>
     </div>
   </div>

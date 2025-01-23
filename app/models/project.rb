@@ -1,8 +1,14 @@
 class Project < ApplicationRecord
   has_many :tasks, dependent: :destroy
 
-  validates :title, presence: true, uniqueness: true
-  validates :description, length: { maximum: 500 }
+  validates :title, 
+            presence: { message: "Название проекта не может быть пустым" },  
+            uniqueness: { message: "Название проекта уже используется" }
+  validates :description, 
+            length: { 
+              maximum: 500, 
+              message: "Описание проекта не должно превышать 500 символов" 
+            }
 
   def self.column_names_rus
     {

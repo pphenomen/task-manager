@@ -14,9 +14,9 @@ class TasksController < ApplicationController
   def create
     @task = Task.new(task_params)
     if @task.save
-      redirect_to tasks_path, notice: 'Задача создана!'
+      redirect_to tasks_path
     else
-      render :new
+      render :new, status: :unprocessable_entity
     end
   end
 
@@ -27,16 +27,16 @@ class TasksController < ApplicationController
   def update
     @task = Task.find(params[:id])
     if @task.update(task_params)
-      redirect_to tasks_path, notice: 'Задача обновлена!'
+      redirect_to tasks_path
     else
-      render :edit
+      render :edit, status: :unprocessable_entity
     end
   end
 
   def destroy
     @task = Task.find(params[:id])
     @task.destroy
-    redirect_to tasks_path, notice: 'Задача удалена!'
+    redirect_to tasks_path
   end
 
   private

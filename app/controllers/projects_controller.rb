@@ -14,9 +14,9 @@ class ProjectsController < ApplicationController
   def create
     @project = Project.new(project_params)
     if @project.save
-      redirect_to projects_path, notice: 'Проект успешно создан!'
+      redirect_to projects_path
     else
-      render :new
+      render :new, status: :unprocessable_entity
     end
   end
 
@@ -27,16 +27,16 @@ class ProjectsController < ApplicationController
   def update
      @project = Project.find(params[:id])
     if @project.update(project_params)
-      redirect_to projects_path, notice: 'Проект обновлён!'
+      redirect_to projects_path
     else
-      render :edit
+      render :edit, status: :unprocessable_entity
     end
   end
 
   def destroy
     @project = Project.find(params[:id])
     @project.destroy
-    redirect_to projects_path, notice: 'Проект удалён!'
+    redirect_to projects_path
   end
   
   private
