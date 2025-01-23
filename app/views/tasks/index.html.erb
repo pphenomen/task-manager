@@ -26,7 +26,7 @@
         <tbody>
           <% @tasks.each_with_index do |task, index| %>
             <tr>
-              <td><%= index + 1 %></td>
+              <td><%= (@current_page - 1) * 5 + index + 1 %></td>
               <% model_attributes.each do |attr| %>
                 <td>
                   <% if attr == "due_date" %>
@@ -54,6 +54,21 @@
           <% end %>
         </tbody>
       </table>
+    </div>
+
+    <!-- Пагинация -->
+    <div class="d-flex justify-content-center mt-4">
+      <% if @current_page > 1 %>
+        <%= link_to "Предыдущая", tasks_path(page: @current_page - 1), class: "btn btn-outline-secondary me-2" %>
+      <% end %>
+
+      <% (1..@total_pages).each do |page| %>
+        <%= link_to page, tasks_path(page: page), class: "btn btn-primary me-2 #{'active' if page == @current_page}" %>
+      <% end %>
+
+      <% if @current_page < @total_pages %>
+        <%= link_to "Следующая", tasks_path(page: @current_page + 1), class: "btn btn-outline-secondary" %>
+      <% end %>
     </div>
 
     <!-- Кнопка возврата к разделам -->

@@ -1,6 +1,9 @@
 class UsersController < ApplicationController
   def index
-    @users = User.all
+    paginated = paginate(User.all, 5)
+    @users = paginated[:records]
+    @current_page = paginated[:current_page]
+    @total_pages = paginated[:total_pages]
   end
 
   def show

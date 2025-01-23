@@ -1,6 +1,9 @@
 class ProjectsController < ApplicationController
   def index
-    @projects = Project.all
+    paginated = paginate(Project.all, 5)
+    @projects = paginated[:records]
+    @current_page = paginated[:current_page]
+    @total_pages = paginated[:total_pages]
   end
 
   def show

@@ -9,6 +9,18 @@ class ApplicationController < ActionController::Base
     raise NotImplementedError, "Метод column_names должен быть реализован в подклассах"
   end
 
+  def paginate(scope, per_page = 5)
+    page = (params[:page] || 1).to_i
+    total_pages = (scope.count.to_f / per_page).ceil
+    paginated_scope = scope.offset((page - 1) * per_page).limit(per_page)
+
+    {
+      records: paginated_scope,
+      current_page: page,
+      total_pages: total_pages
+    }
+  end
+
   private
 
   def handle_db_connection_error(exception)

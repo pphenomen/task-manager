@@ -1,6 +1,10 @@
 class TasksController < ApplicationController
   def index
-    @tasks = Task.all
+    sorted_tasks = sort_tasks(Task.all)
+    paginated = paginate(Task.all, 5)
+    @tasks = paginated[:records]
+    @current_page = paginated[:current_page]
+    @total_pages = paginated[:total_pages]
   end
 
   def show
