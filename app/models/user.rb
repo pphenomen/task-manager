@@ -6,7 +6,6 @@ class User < ApplicationRecord
 	
   	def self.column_names_rus
   	  {
-  	  	"id" => "№",
   	    "name" => "Имя",
   	    "email" => "Электронная почта"
   	  }

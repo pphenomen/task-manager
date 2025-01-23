@@ -14,7 +14,7 @@ class TasksController < ApplicationController
   def create
     @task = Task.new(task_params)
     if @task.save
-      redirect_to @task, notice: 'Задача создана!'
+      redirect_to tasks_path, notice: 'Задача создана!'
     else
       render :new
     end
@@ -27,7 +27,7 @@ class TasksController < ApplicationController
   def update
     @task = Task.find(params[:id])
     if @task.update(task_params)
-      redirect_to @task, notice: 'Задача обновлена!'
+      redirect_to tasks_path, notice: 'Задача обновлена!'
     else
       render :edit
     end

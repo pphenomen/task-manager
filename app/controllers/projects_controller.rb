@@ -14,7 +14,7 @@ class ProjectsController < ApplicationController
   def create
     @project = Project.new(project_params)
     if @project.save
-      redirect_to @project, notice: 'Проект успешно создан!'
+      redirect_to projects_path, notice: 'Проект успешно создан!'
     else
       render :new
     end
@@ -27,7 +27,7 @@ class ProjectsController < ApplicationController
   def update
      @project = Project.find(params[:id])
     if @project.update(project_params)
-      redirect_to @project, notice: 'Проект обновлён!'
+      redirect_to projects_path, notice: 'Проект обновлён!'
     else
       render :edit
     end

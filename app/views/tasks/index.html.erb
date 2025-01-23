@@ -9,18 +9,24 @@
       <table class="table table-hover align-middle">
         <thead class="table-dark">
           <tr>
+            <th>№</th>
             <% model_class = Task %>
             <% model_attributes = model_class.column_names - ["id", "created_at", "updated_at"] %>
 
             <% model_attributes.each do |attr| %>
-              <th><%= model_class.column_names_rus[attr] %></th>
+              <% if attr == "status" %>
+                <th style="width: 120px;"><%= model_class.column_names_rus[attr] %></th>
+              <% else %>
+                <th><%= model_class.column_names_rus[attr] %></th>
+              <% end %>
             <% end %>
-            <th class="text-center">Действия</th>
+            <th class="text-center" style="width: 150px;">Действия</th>
           </tr>
         </thead>
         <tbody>
-          <% @tasks.each do |task| %>
+          <% @tasks.each_with_index do |task, index| %>
             <tr>
+              <td><%= index + 1 %></td>
               <% model_attributes.each do |attr| %>
                 <td>
                   <% if attr == "due_date" %>
@@ -29,14 +35,20 @@
                     <%= task.project_name %>
                   <% elsif attr == "assignee_id" %>
                     <%= task.assignee_name %>
+                  <% elsif attr == "status" %>
+                    <%= task.current_status %>
                   <% else %>
                     <%= task.send(attr) %>
                   <% end %>
                 </td>
               <% end %>
               <td class="text-center">
-                <%= link_to "✏️", edit_task_path(task), class: "btn btn-outline-light btn-sm me-2" %>
-                <%= link_to "🗑", task, method: :delete, data: { confirm: "Удалить задачу?" }, class: "btn btn-outline-light btn-sm" %>
+                <%= form_with url: edit_task_path(task), method: :get, local: true, class: "d-inline" do %>
+                  <%= button_to "✏️", edit_task_path(task), method: :get, class: "btn btn-outline-light btn-sm me-2" %>
+                <% end %>
+                <%= form_with url: task_path(task), method: :delete, local: true, class: "d-inline" do %>
+                  <%= button_to "🗑", task_path(task), method: :delete, data: { confirm: "Вы уверены, что хотите удалить эту задачу?" }, class: "btn btn-outline-light btn-sm" %>
+                <% end %>
               </td>
             </tr>
           <% end %>

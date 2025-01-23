@@ -25,8 +25,12 @@ class Task < ApplicationRecord
   end
 
   def current_status
-    status_hash = { 'Новая' => 'новая', 'В процессе' => 'в_процессе', 'Завершена' => 'завершена' }
-    status_hash[status]
+    status_hash = {
+      'новая' => 'Новая',
+      'в_процессе' => 'В процессе',
+      'завершена' => 'Завершена'
+    }
+    status_hash[status] || status
   end
 
   def formatted_due_date
