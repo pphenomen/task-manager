@@ -26,7 +26,7 @@ class TasksController < ApplicationController
   def create
     @task = Task.new(task_params)
     if @task.save
-      redirect_to tasks_path
+      redirect_to tasks_path, notice: 'Задача успешно создана.'
     else
       render :new, status: :unprocessable_entity
     end
@@ -39,7 +39,7 @@ class TasksController < ApplicationController
   def update
     @task = Task.find(params[:id])
     if @task.update(task_params)
-      redirect_to tasks_path
+      redirect_to tasks_path, notice: 'Задача успешно обновлена.'
     else
       render :edit, status: :unprocessable_entity
     end
@@ -47,8 +47,13 @@ class TasksController < ApplicationController
 
   def destroy
     @task = Task.find(params[:id])
-    @task.destroy
-    redirect_to tasks_path
+    if @task.destroy
+      redirect_to projects_path, notice: 'Задача успешно удалена.'
+    else
+      redirect_to tasks_path, alert: 'Не удалось удалить задачу. Убедитесь, что нет связанных записей.'
+    end
+  rescue ActiveRecord::InvalidForeignKey => e
+    redirect_to projects_path, alert: 'Ошибка: Невозможно удалить задачу, так как существуют связанные записи.'
   end
 
   private

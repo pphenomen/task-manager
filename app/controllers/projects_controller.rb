@@ -22,7 +22,7 @@ class ProjectsController < ApplicationController
   def create
     @project = Project.new(project_params)
     if @project.save
-      redirect_to projects_path
+      redirect_to projects_path, notice: 'Проект успешно создан.'
     else
       render :new, status: :unprocessable_entity
     end
@@ -35,7 +35,7 @@ class ProjectsController < ApplicationController
   def update
     @project = Project.find(params[:id])
     if @project.update(project_params)
-      redirect_to projects_path
+      redirect_to projects_path, notice: 'Проект успешно обновлён.'
     else
       render :edit, status: :unprocessable_entity
     end
@@ -43,8 +43,13 @@ class ProjectsController < ApplicationController
 
   def destroy
     @project = Project.find(params[:id])
-    @project.destroy
-    redirect_to projects_path
+    if @project.destroy
+      redirect_to projects_path, notice: 'Проект успешно удалён.'
+    else
+      redirect_to projects_path, alert: 'Не удалось удалить проект. Убедитесь, что нет связанных записей.'
+    end
+  rescue ActiveRecord::InvalidForeignKey => e
+    redirect_to projects_path, alert: 'Ошибка: Невозможно удалить проект, так как существуют связанные записи.'
   end
   
   private

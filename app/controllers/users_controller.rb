@@ -22,7 +22,7 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
-      redirect_to users_path
+      redirect_to users_path, notice: 'Пользователь успешно создан.'
     else
       render :new, status: :unprocessable_entity
     end
@@ -35,7 +35,7 @@ class UsersController < ApplicationController
   def update
     @user = User.find(params[:id])
     if @user.update(user_params)
-      redirect_to users_path
+      redirect_to users_path, notice: 'Пользователь успешно обновлён.'
     else
       render :edit, status: :unprocessable_entity
     end
@@ -43,8 +43,13 @@ class UsersController < ApplicationController
 
   def destroy
     @user = User.find(params[:id])
-    @user.destroy
-    redirect_to users_path
+    if @user.destroy
+      redirect_to users_path, notice: 'Пользователь успешно удалён.'
+    else 
+      redirect_to projects_path, alert: 'Не удалось удалить пользователя. Убедитесь, что нет связанных записей.'
+    end
+  rescue ActiveRecord::InvalidForeignKey => e
+    redirect_to projects_path, alert: 'Ошибка: Невозможно удалить пользователя, так как существуют связанные записи.'
   end
 
   private

@@ -47,7 +47,7 @@
             <%= f.submit "Искать", class: "btn btn-primary" %>
           </div>
           <div>
-            <%= link_to "Сбросить фильтры", users_path, class: "btn btn-secondary" %>
+            <%= link_to "Сбросить фильтры", users_path, class: "btn btn-success" %>
           </div>
         <% end %>
       </div>
@@ -56,21 +56,21 @@
     <!-- Пагинация -->
     <div class="d-flex justify-content-center mt-4">
       <% if @current_page > 1 %>
-        <%= link_to "←", users_path(page: @current_page - 1), class: "btn btn-dark me-2" %>
+        <%= link_to "←", users_path(page: @current_page - 1), class: "btn btn-secondary me-2" %>
       <% end %>
 
       <% (1..@total_pages).each do |page| %>
-        <%= link_to page, users_path(page: page), class: "btn btn-dark me-2 #{'active' if page == @current_page}" %>
+        <%= link_to page, users_path(page: page), class: "btn btn-secondary me-2 #{'active' if page == @current_page}" %>
       <% end %>
 
       <% if @current_page < @total_pages %>
-        <%= link_to "→", users_path(page: @current_page + 1), class: "btn btn-dark" %>
+        <%= link_to "→", users_path(page: @current_page + 1), class: "btn btn-secondary" %>
       <% end %>
     </div>
 
     <!-- Кнопка возврата к разделам -->
     <div class="text-center mt-4">
-      <%= link_to "🏠 Вернуться назад", root_path(anchor: "sections"), class: "btn btn-success btn-lg" %>
+      <%= link_to "🏠 Вернуться назад", root_path(anchor: "sections"), class: "btn btn-secondary btn-lg" %>
     </div>
   </div>
 </div>
