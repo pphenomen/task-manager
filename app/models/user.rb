@@ -1,5 +1,5 @@
 class User < ApplicationRecord
-	has_many :tasks, foreign_key: "assignee_id"
+	has_many :tasks, foreign_key: "assignee_id", dependent: :restrict_with_error
 
   	validates :name, 
   		presence: { message: "Имя не может быть пустым" }, 

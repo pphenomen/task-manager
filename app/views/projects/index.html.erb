@@ -25,12 +25,10 @@
                 <td><%= project.send(attr) %></td>
               <% end %>
               <td class="text-center">
-                <%= form_with url: edit_project_path(project), method: :get, local: true, class: "d-inline" do %>
-                  <%= button_to "✏️", edit_project_path(project), method: :get, class: "btn btn-outline-light btn-sm me-2" %>
-                <% end %>
-                <%= form_with url: project_path(project), method: :delete, local: true, class: "d-inline" do %>
-                  <%= button_to "🗑", project_path(project), method: :delete, data: { confirm: "Вы уверены, что хотите удалить этот проект?" }, class: "btn btn-outline-light btn-sm" %>
-                <% end %>
+                <div style="display: flex; gap: 5px; justify-content: center;">
+                  <%= link_to "Изменить", edit_project_path(project), class: "btn btn-warning btn-sm me-2" %>
+                  <%= link_to "Удалить", project_path(project), method: :delete, data: { turbo_confirm: "Вы уверены, что хотите удалить задачу?" }, class: "btn btn-danger btn-sm" %>
+                </div>
               </td>
             </tr>
           <% end %>
@@ -41,21 +39,21 @@
     <!-- Пагинация -->
     <div class="d-flex justify-content-center mt-4">
       <% if @current_page > 1 %>
-        <%= link_to "Предыдущая", projects_path(page: @current_page - 1), class: "btn btn-outline-secondary me-2" %>
+        <%= link_to "←", projects_path(page: @current_page - 1), class: "btn btn-dark me-2" %>
       <% end %>
 
       <% (1..@total_pages).each do |page| %>
-        <%= link_to page, projects_path(page: page), class: "btn btn-primary me-2 #{'active' if page == @current_page}" %>
+        <%= link_to page, projects_path(page: page), class: "btn btn-dark me-2 #{'active' if page == @current_page}" %>
       <% end %>
 
       <% if @current_page < @total_pages %>
-        <%= link_to "Следующая", projects_path(page: @current_page + 1), class: "btn btn-outline-secondary" %>
+        <%= link_to "→", projects_path(page: @current_page + 1), class: "btn btn-dark" %>
       <% end %>
     </div>
 
     <!-- Кнопка возврата к разделам -->
     <div class="text-center mt-4">
-      <%= link_to "🏠 Вернуться назад", root_path(anchor: "sections"), class: "btn btn-secondary btn-lg" %>
+      <%= link_to "🏠 Вернуться назад", root_path(anchor: "sections"), class: "btn btn-success btn-lg" %>
     </div>
   </div>
 </div>

@@ -1,13 +1,41 @@
-<%= form_with model: object, local: true, class: "needs-validation" do |form| %>
-  <% object.attributes.except("id", "created_at", "updated_at").each do |attr, value| %>
-    <div class="mb-3">
-      <%= form.label attr, Project.column_names_rus[attr], class: "form-label" %>
-      <%= form.text_field attr, value: value, class: "form-control", required: true %>
+<%= form_with model: project, local: true, class: "needs-validation" do |form| %>
+  <!-- Вывод ошибок над формой -->
+  <% if project.errors.any? %>
+    <div class="alert alert-danger">
+      <h4><%= project.new_record? ? 'Невозможно добавить проект:' : 'Невозможно обновить проект:' %></h4>
+      <ul>
+        <% project.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
     </div>
   <% end %>
 
-  <div class="mt-3">
-    <%= form.submit "Сохранить", class: "btn btn-primary btn-lg me-3" %>
+  <!-- Поле для названия проекта -->
+  <div class="mb-4">
+    <%= form.label :title, "Название проекта", class: "form-label fw-bold" %>
+    <%= form.text_field :title, class: "form-control #{'is-invalid' if project.errors[:title].any?}" %>
+    <% if project.errors[:title].any? %>
+      <div class="invalid-feedback">
+        <%= project.errors[:title].join(", ") %>
+      </div>
+    <% end %>
+  </div>
+
+  <!-- Поле для описания проекта -->
+  <div class="mb-4">
+    <%= form.label :description, "Описание", class: "form-label fw-bold" %>
+    <%= form.text_area :description, class: "form-control #{'is-invalid' if project.errors[:description].any?}" %>
+    <% if project.errors[:description].any? %>
+      <div class="invalid-feedback">
+        <%= project.errors[:description].join(", ") %>
+      </div>
+    <% end %>
+  </div>
+
+  <!-- Кнопки -->
+  <div class="mt-4">
+    <%= form.submit project.new_record? ? "Добавить" : "Сохранить", class: "btn btn-primary btn-lg me-3" %>
     <%= link_to "Назад", projects_path, class: "btn btn-secondary btn-lg" %>
   </div>
 <% end %>

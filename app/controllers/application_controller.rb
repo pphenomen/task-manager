@@ -4,6 +4,7 @@ class ApplicationController < ActionController::Base
 
   rescue_from ActiveRecord::ConnectionNotEstablished, with: :handle_db_connection_error
   rescue_from ActiveRecord::StatementInvalid, with: :handle_db_statement_error
+  rescue_from ActiveRecord::RecordNotDestroyed, with: :handle_record_not_destroyed
 
   def self.column_names
     raise NotImplementedError, "Метод column_names должен быть реализован в подклассах"
@@ -22,6 +23,11 @@ class ApplicationController < ActionController::Base
   end
 
   private
+
+  def handle_record_not_destroyed(exception)
+    Rails.logger.error "Ошибка удаления записи: #{exception.record.errors.full_messages.to_sentence}"
+    redirect_back fallback_location: root_path, alert: exception.record.errors.full_messages.to_sentence
+  end
 
   def handle_db_connection_error(exception)
     Rails.logger.error "Ошибка подключения к базе данных: #{exception.message}"

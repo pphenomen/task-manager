@@ -47,7 +47,7 @@
   <!-- Поле для статуса -->
   <div class="mb-4">
     <%= form.label :status, "Статус", class: "form-label fw-bold" %>
-    <%= form.select :status, options_for_select([['Новая', 'новая'], ['В процессе', 'в_процессе'], ['Завершена', 'завершена']], selected: task.status), {}, { class: "form-control form-select #{'is-invalid' if task.errors[:status].any?}" } %>
+    <%= form.select :status, options_for_select([['Новая', 'новая'], ['В процессе', 'в_процессе'], ['Завершена', 'завершена']], selected: task.status), { prompt: "Выберите статус" }, { class: "form-control form-select #{'is-invalid' if task.errors[:status].any?}" } %>
     <% if task.errors[:status].any? %>
       <div class="invalid-feedback">
         <%= task.errors[:status].join(", ") %>
@@ -79,7 +79,7 @@
 
   <!-- Кнопки -->
   <div class="mt-4">
-    <%= form.submit task.new_record? ? "Добавить задачу" : "Обновить задачу", class: "btn btn-primary btn-lg me-3" %>
+    <%= form.submit task.new_record? ? "Добавить задачу" : "Сохранить задачу", class: "btn btn-primary btn-lg me-3" %>
     <%= link_to "Назад", tasks_path, class: "btn btn-secondary btn-lg" %>
   </div>
 <% end %>

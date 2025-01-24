@@ -15,6 +15,9 @@ class Task < ApplicationRecord
               message: "Описание задачи не должно превышать 500 символов" 
             }
 
+  validates :status,
+            presence: { message: "Статус должен быть выбран" }
+
   validates :project_id, 
             presence: { message: "Проект должен быть выбран" }
 

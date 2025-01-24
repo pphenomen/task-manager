@@ -1,5 +1,5 @@
 class Project < ApplicationRecord
-  has_many :tasks, dependent: :destroy
+  has_many :tasks, dependent: :restrict_with_error
 
   validates :title, 
             presence: { message: "Название проекта не может быть пустым" },  

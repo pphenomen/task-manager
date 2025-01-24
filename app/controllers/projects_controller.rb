@@ -28,7 +28,7 @@ class ProjectsController < ApplicationController
   end
 
   def update
-     @project = Project.find(params[:id])
+    @project = Project.find(params[:id])
     if @project.update(project_params)
       redirect_to projects_path
     else
