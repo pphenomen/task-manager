@@ -1,4 +1,9 @@
+# README
 # TASK MANAGER - Управляйте задачами, проектами и пользователями в одном месте.
+
+ERD:
+![alt text](https://github.com/pphenomen/task-manager/blob/main/app/assets/diagrams/erd/ERD.jpg)
+
 Диаграмма классов:
 ![alt text](https://github.com/pphenomen/task-manager/blob/main/app/assets/diagrams/class/class_diagram.jpg)
 
