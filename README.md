@@ -1,24 +1,9 @@
-# README
+# TASK MANAGER - Управляйте задачами, проектами и пользователями в одном месте.
+Диаграмма классов:
+![alt text](https://github.com/pphenomen/task-manager/blob/main/app/assets/diagrams/class/class_diagram.jpg)
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Диаграмма последовательностей "Добавить пользователя":
+![alt text](https://github.com/pphenomen/task-manager/blob/main/app/assets/diagrams/sequence/create_user_sequence_diagram.jpg)
 
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+Диаграмма последовательностей "Удалить пользователя":
+![alt text](https://github.com/pphenomen/task-manager/blob/main/app/assets/diagrams/sequence/delete_user_sequence_diagram.jpg)
