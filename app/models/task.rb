@@ -28,6 +28,12 @@ class Task < ApplicationRecord
             presence: { message: "Срок выполнения должен быть выбран" }
   validate :due_date_cannot_be_in_the_past
 
+  STATUS_HASH = {
+    'новая' => 'Новая',
+    'в_процессе' => 'В процессе',
+    'завершена' => 'Завершена'
+  }.freeze
+
   def self.column_names_rus
     {
       "title" => "Название",
@@ -48,12 +54,11 @@ class Task < ApplicationRecord
   end
 
   def current_status
-    status_hash = {
-      'новая' => 'Новая',
-      'в_процессе' => 'В процессе',
-      'завершена' => 'Завершена'
-    }
-    status_hash[status] || status
+    STATUS_HASH[status] || status
+  end
+
+  def self.status_options
+    STATUS_HASH.map { |key, value| [value, key] }
   end
 
   def formatted_due_date

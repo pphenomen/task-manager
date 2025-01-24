@@ -1,13 +1,18 @@
 class ProjectsController < ApplicationController
   def index
-    paginated = paginate(Project.all, 5)
+    projects = Project.all
+
+    # Фильтрация
+    projects = projects.where("title ILIKE ?", "%#{params[:title]}%") if params[:title].present?
+    
+    # Пагинация
+    paginated = paginate(projects, 5)
     @projects = paginated[:records]
     @current_page = paginated[:current_page]
     @total_pages = paginated[:total_pages]
   end
 
   def show
-    @project = Project.find(params[:id])
   end
 
   def new

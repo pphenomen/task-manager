@@ -1,13 +1,18 @@
 class UsersController < ApplicationController
   def index
-    paginated = paginate(User.all, 5)
+    users = User.all
+    
+    # Фильтрация
+    users = users.where("name ILIKE ?", "%#{params[:name]}%") if params[:name].present?
+
+    # Пагинация
+    paginated = paginate(users, 5)
     @users = paginated[:records]
     @current_page = paginated[:current_page]
     @total_pages = paginated[:total_pages]
   end
 
   def show
-    @user = User.find(params[:id])
   end
 
   def new
@@ -46,5 +51,9 @@ class UsersController < ApplicationController
 
   def user_params
     params.require(:user).permit(:name, :email)
+  end
+
+  def filter_params
+    params.permit(:name)
   end
 end

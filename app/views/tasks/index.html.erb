@@ -6,6 +6,7 @@
         <%= link_to "Добавить задачу", new_task_path, class: "btn btn-primary btn-lg" %>
       </div>
 
+      <!-- Таблица -->
       <table class="table table-hover align-middle">
         <thead class="table-dark">
           <tr>
@@ -45,13 +46,54 @@
               <td class="text-center">
                 <div style="display: flex; gap: 5px; justify-content: center;">
                   <%= link_to "Изменить", edit_task_path(task, page: params[:page]), class: "btn btn-warning btn-sm me-2" %>
-                  <%= link_to "Удалить", task_path(task, page: params[:page]), method: :delete, data: { turbo_confirm: "Вы уверены, что хотите удалить задачу?" }, class: "btn btn-danger btn-sm" %>
+                  <%= button_to "Удалить", task_path(task, page: params[:page]), method: :delete, data: { turbo_confirm: "Вы уверены, что хотите удалить задачу?" }, class: "btn btn-danger btn-sm" %>
                 </div>
               </td>
             </tr>
           <% end %>
         </tbody>
       </table>
+
+      <div class="p-3 bg-light rounded">
+        <h5 class="mb-3">Фильтрация</h5>
+        <%= form_with url: tasks_path, method: :get, local: true, class: "d-flex align-items-center gap-2 flex-wrap" do |f| %>
+          <!-- Название задачи -->
+          <div>
+            <%= f.label :title, "Название задачи", class: "form-label" %>
+            <%= f.text_field :title, value: params[:title], placeholder: "Введите название", class: "form-control" %>
+          </div>
+
+          <!-- Статус задачи -->
+          <div>
+            <%= f.label :status, "Статус задачи", class: "form-label" %>
+            <%= f.select :status, Task.status_options, { include_blank: "Все", selected: params[:status] }, class: "form-select" %>
+          </div>
+
+          <!-- Проект -->
+          <div>
+            <%= f.label :project_id, "Проект", class: "form-label" %>
+            <%= f.collection_select :project_id, Project.all, :id, :title, { include_blank: "Все проекты", selected: params[:project_id] }, class: "form-select" %>
+          </div>
+
+          <!-- Исполнитель -->
+          <div>
+            <%= f.label :assignee_id, "Исполнитель", class: "form-label" %>
+            <%= f.collection_select :assignee_id, User.all, :id, :name, { include_blank: "Все исполнители", selected: params[:assignee_id] }, class: "form-select" %>
+          </div>
+
+          <!-- Сортировка -->
+          <div>
+            <%= f.label :order, "Сортировка", class: "form-label" %>
+            <%= f.select :order, [["Раньше заканчиваются", "asc"], ["Позже заканчиваются", "desc"]], { include_blank: "Не сортировать", selected: params[:order] }, class: "form-select" %>
+          </div>
+
+          <!-- Кнопки -->
+          <div class="d-flex gap-2">
+            <%= f.submit "Применить", class: "btn btn-primary" %>
+            <%= link_to "Сбросить фильтры", tasks_path, class: "btn btn-secondary" %>
+          </div>
+        <% end %>
+      </div>
     </div>
 
     <!-- Пагинация -->
@@ -71,7 +113,7 @@
 
     <!-- Кнопка возврата к разделам -->
     <div class="text-center mt-4"> 
-      <%= link_to "🏠 Вернуться назад", root_path(anchor: "sections"), class: "btn btn-success btn-lg" %>
+      <%= link_to "🏠 Вернуться назад", root_path(anchor: "sections"), class: "btn btn-secondary btn-lg" %>
     </div>
   </div>
 </div>
