@@ -3,11 +3,7 @@ class TasksController < ApplicationController
     tasks = Task.all
 
     # Фильтрация
-    tasks = tasks.where("title ILIKE ?", "%#{params[:title]}%") if params[:title].present?
-    tasks = tasks.where(status: params[:status]) if params[:status].present?
-    tasks = tasks.where(project_id: params[:project_id]) if params[:project_id].present?
-    tasks = tasks.where(assignee_id: params[:assignee_id]) if params[:assignee_id].present?
-    tasks = tasks.order(due_date: params[:order] == "asc" ? :asc : :desc) if params[:order].present?
+    tasks = TaskFilterDecorator.new(tasks).filter(params)
 
     # Пагинация
     paginated = paginate(tasks, 5)

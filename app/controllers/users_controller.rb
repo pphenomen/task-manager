@@ -3,7 +3,7 @@ class UsersController < ApplicationController
     users = User.all
     
     # Фильтрация
-    users = users.where("name ILIKE ?", "%#{params[:name]}%") if params[:name].present?
+    users = UserFilterDecorator.new(users).filter(filter_params)
 
     # Пагинация
     paginated = paginate(users, 5)

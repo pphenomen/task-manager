@@ -3,7 +3,7 @@ class ProjectsController < ApplicationController
     projects = Project.all
 
     # Фильтрация
-    projects = projects.where("title ILIKE ?", "%#{params[:title]}%") if params[:title].present?
+    projects = ProjectFilterDecorator.new(projects).filter(params)
     
     # Пагинация
     paginated = paginate(projects, 5)
