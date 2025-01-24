@@ -6,11 +6,9 @@ class ApplicationController < ActionController::Base
   rescue_from ActiveRecord::StatementInvalid, with: :handle_db_statement_error
   rescue_from ActiveRecord::RecordNotDestroyed, with: :handle_record_not_destroyed
 
-  def self.column_names
-    raise NotImplementedError, "Метод column_names должен быть реализован в подклассах"
-  end
+  PER_PAGE = 5
 
-  def paginate(scope, per_page = 5)
+  def paginate(scope, per_page)
     page = (params[:page] || 1).to_i
     total_pages = (scope.count.to_f / per_page).ceil
     paginated_scope = scope.offset((page - 1) * per_page).limit(per_page)

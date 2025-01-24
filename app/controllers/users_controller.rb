@@ -3,7 +3,7 @@ class UsersController < ApplicationController
     users = User.all
     
     # Фильтрация
-    users = UserFilterDecorator.new(users).filter(filter_params)
+    users = UserFilterDecorator.new(users).filter(params)
 
     # Пагинация
     paginated = paginate(users, 5)
@@ -56,9 +56,5 @@ class UsersController < ApplicationController
 
   def user_params
     params.require(:user).permit(:name, :email)
-  end
-
-  def filter_params
-    params.permit(:name)
   end
 end
