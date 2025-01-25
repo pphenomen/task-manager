@@ -1,4 +1,4 @@
-class TaskDecorator
+class TaskDecorator < BaseDecorator
 
   STATUS_HASH = {
     'новая' => 'Новая',
@@ -6,43 +6,20 @@ class TaskDecorator
     'завершена' => 'Завершена'
   }.freeze
 
-  def initialize(task)
-    @task = task
-  end
-
   def formatted_due_date
-    @task.due_date.strftime('%d.%m.%Y') if @task.due_date.present?
+    object.due_date&.strftime('%d.%m.%Y')
   end
 
   def project_name
-    @task.project.present? ? @task.project.title : 'Без проекта'
+    object.project&.title || 'Без проекта'
   end
 
   def assignee_name
-    @task.assignee.present? ? @task.assignee.name : 'Без исполнителя'
-  end
-
-  def value_for(attr)
-    case attr
-    when "due_date"
-      formatted_due_date
-    when "project_id"
-      project_name
-    when "assignee_id"
-      assignee_name
-    when "status"
-      current_status
-    else
-      nil
-    end
+    object.assignee&.name || 'Без исполнителя'
   end
 
   def current_status
-    {
-      'новая' => 'Новая',
-      'в_процессе' => 'В процессе',
-      'завершена' => 'Завершена'
-    }[@task.status] || @task.status
+    STATUS_HASH[object.status] || object.status
   end
 
   def self.status_options
@@ -59,8 +36,4 @@ class TaskDecorator
       'assignee_id' => 'Исполнитель'
     }
   end
-
-  private
-
-  attr_reader :task
 end
