@@ -13,7 +13,7 @@
             <th>№</th>
             <% model_attributes = User.column_names - ["id", "created_at", "updated_at"] %>
             <% model_attributes.each do |attr| %>
-              <th><%= User.column_names_rus[attr]%></th>
+              <th><%= UserDecorator.column_names_rus[attr]%></th>
             <% end %>
             <th class="text-center">Действия</th>
           </tr>
@@ -23,7 +23,7 @@
             <tr>
               <td><%= (@current_page - 1) * 5 + index + 1 %></td>
               <% model_attributes.each do |attr| %>
-                <td><%= user.send(attr) %></td>
+                <td><%= user.value_for(attr) %></td>
               <% end %>
               <td class="text-center">
                 <div style="display: flex; gap: 5px; justify-content: center;">

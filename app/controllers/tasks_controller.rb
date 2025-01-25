@@ -6,8 +6,8 @@ class TasksController < ApplicationController
     tasks = TaskFilterDecorator.new(tasks).filter(params)
 
     # Пагинация
-    paginated = paginate(tasks, 5)
-    @tasks = paginated[:records]
+    paginated = paginate(tasks)
+    @tasks = paginated[:records].map { |task| TaskDecorator.new(task) }
     @current_page = paginated[:current_page]
     @total_pages = paginated[:total_pages]
   end

@@ -8,10 +8,10 @@ class ApplicationController < ActionController::Base
 
   PER_PAGE = 5
 
-  def paginate(scope, per_page)
+  def paginate(scope)
     page = (params[:page] || 1).to_i
-    total_pages = (scope.count.to_f / per_page).ceil
-    paginated_scope = scope.offset((page - 1) * per_page).limit(per_page)
+    total_pages = (scope.count.to_f / PER_PAGE).ceil
+    paginated_scope = scope.offset((page - 1) * PER_PAGE).limit(PER_PAGE)
 
     {
       records: paginated_scope,

@@ -6,8 +6,8 @@ class ProjectsController < ApplicationController
     projects = ProjectFilterDecorator.new(projects).filter(params)
     
     # Пагинация
-    paginated = paginate(projects, 5)
-    @projects = paginated[:records]
+    paginated = paginate(projects)
+    @projects = paginated[:records].map { |task| ProjectDecorator.new(task) }
     @current_page = paginated[:current_page]
     @total_pages = paginated[:total_pages]
   end
