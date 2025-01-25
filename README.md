@@ -1,24 +1,14 @@
-# README
+# task-manager
+Веб-приложение на ruby on rails + html. Выполняет CRUD-операции с фильтрацией данных.
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+ERD диаграмма:
+![alt text](https://github.com/pphenomen/task-manager/blob/main/app/assets/diagrams/erd/ERD.jpg)
 
-Things you may want to cover:
+Диаграмма классов:
+![alt text](https://github.com/pphenomen/task-manager/blob/main/app/assets/diagrams/class/class_diagram.jpg)
 
-* Ruby version
+Диаграмма последовательностей "Добавить пользователя":
+![alt text](https://github.com/pphenomen/task-manager/blob/main/app/assets/diagrams/sequence/create_user_sequence_diagram.jpg)
 
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+Диаграмма последовательностей "Удалить пользователя":
+![alt text](https://github.com/pphenomen/task-manager/blob/main/app/assets/diagrams/sequence/delete_user_sequence_diagram.jpg)
