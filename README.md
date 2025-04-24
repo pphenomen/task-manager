@@ -1,4 +1,9 @@
-# TASK MANAGER - Управляйте задачами, проектами и пользователями в одном месте.
+# task-manager
+Веб-приложение на ruby on rails + html. Выполняет CRUD-операции с фильтрацией данных.
+
+ERD диаграмма:
+![alt text](https://github.com/pphenomen/task-manager/blob/main/app/assets/diagrams/erd/ERD.jpg)
+
 Диаграмма классов:
 ![alt text](https://github.com/pphenomen/task-manager/blob/main/app/assets/diagrams/class/class_diagram.jpg)
 
