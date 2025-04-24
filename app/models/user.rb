@@ -8,11 +8,4 @@ class User < ApplicationRecord
   		presence: { message: "Электронная почта не может быть пустой" }, 
   		uniqueness: { message: "Электронная почта уже используется" }, 
   		format: { with: URI::MailTo::EMAIL_REGEXP, message: "Электронная почта не соответствует формату: username@example.com" }
-
-  	def self.column_names_rus
-  	  {
-  	    "name" => "Имя",
-  	    "email" => "Электронная почта"
-  	  }
-  	end
 end
