@@ -13,7 +13,7 @@
             <th>№</th>
             <% model_attributes = Project.column_names - ["id", "created_at", "updated_at"] %>
             <% model_attributes.each do |attr| %>
-              <th><%= Project.column_names_rus[attr] %></th>
+              <th><%= ProjectDecorator.column_names_rus[attr] %></th>
             <% end %>
             <th class="text-center">Действия</th>
           </tr>
@@ -23,12 +23,12 @@
             <tr>
               <td><%= (@current_page - 1) * 5 + index + 1 %></td>
               <% model_attributes.each do |attr| %>
-                <td><%= project.send(attr) %></td>
+                <td><%= project.value_for(attr) %></td>
               <% end %>
               <td class="text-center">
                 <div style="display: flex; gap: 5px; justify-content: center;">
                   <%= link_to "Изменить", edit_project_path(project), class: "btn btn-warning btn-sm me-2" %>
-                  <%= button_to "Удалить", project_path(project), method: :delete, data: { turbo_confirm: "Вы уверены, что хотите удалить задачу?" }, class: "btn btn-danger btn-sm" %>
+                  <%= button_to "Удалить", project_path(project), method: :delete, data: { turbo_confirm: "Вы уверены, что хотите удалить проект?" }, class: "btn btn-danger btn-sm" %>
                 </div>
               </td>
             </tr>

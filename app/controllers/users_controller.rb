@@ -6,8 +6,8 @@ class UsersController < ApplicationController
     users = UserFilterDecorator.new(users).filter(params)
 
     # Пагинация
-    paginated = paginate(users, 5)
-    @users = paginated[:records]
+    paginated = paginate(users)
+    @users = paginated[:records].map { |task| UserDecorator.new(task) }
     @current_page = paginated[:current_page]
     @total_pages = paginated[:total_pages]
   end
