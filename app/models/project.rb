@@ -10,13 +10,6 @@ class Project < ApplicationRecord
               message: "Описание проекта не должно превышать 500 символов" 
             }
 
-  def self.column_names_rus
-    {
-      "title" => "Название",
-      "description" => "Описание"
-    }
-  end
-
   def active_tasks
     tasks.where(status: "в_работе")
   end
